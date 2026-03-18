@@ -68,7 +68,6 @@ python manage.py createsuperuser
 Run development server
 python manage.py runserver
 
-text
 
 Open http://127.0.0.1:8000 in your browser.
 
@@ -118,8 +117,6 @@ personal-info-manager/
 ├── manage.py
 ├── requirements.txt
 └── README.md
-
-text
 
 ---
 
