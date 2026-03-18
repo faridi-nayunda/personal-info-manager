@@ -1,0 +1,29 @@
+# --- Python & Django ---
+*.pyc
+__pycache__/
+db.sqlite3
+/media/
+/staticfiles/
+.env
+local_settings.py
+
+# --- Pipenv (Virtual Environment) ---
+# keep Pipfile and Pipfile.lock, but ignore the actual environment 
+# if you have configured PIPENV_VENV_IN_PROJECT=1
+.venv/
+bin/
+lib/
+share/
+
+# --- Tailwind CSS & Frontend ---
+node_modules/
+.eslintcache
+# If you use a build step for CSS, ignore the generated output file 
+# while keeping the source file (e.g., input.css)
+/static/css/dist/
+*.log
+
+# --- System & IDE ---
+.DS_Store
+.vscode/
+.idea/
