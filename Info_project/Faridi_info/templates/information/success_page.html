@@ -1,0 +1,68 @@
+{% extends "information/layout.html" %}
+
+{% block content %}
+<div class="my-8 text-center">
+    <h1 class="text-3xl font-semibold text-purple-800">Personal Information</h1>
+</div>
+
+<div class="overflow-x-auto mx-auto max-w-6xl rounded-lg shadow-lg">
+    <table class="min-w-full border-collapse bg-white shadow-md rounded-lg">
+        <thead class="bg-purple-800 text-white text-left text-sm font-semibold">
+            <tr>
+                <th class="py-3 px-5">First Name</th>
+                <th class="py-3 px-5">Last Name</th>
+                <th class="py-3 px-5">Email</th>
+                <th class="py-3 px-5">Phone</th>
+                <th class="py-3 px-5">Address</th>
+                <th class="py-3 px-5">Date of Birth</th>
+                <th class="py-3 px-5">Profile Picture</th>
+                <th class="py-3 px-5">Document</th>
+                <th class="py-3 px-5">Date Created</th>
+                <th class="py-3 px-5 text-center">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-200 text-left">
+            {% for info in my_info %}
+            <tr class="hover:bg-gray-100">
+                <td class="px-8 py-2 text-gray-900">{{ info.first_name }}</td>
+                <td class="px-8 py-2 text-gray-900">{{ info.last_name }}</td>
+                <td class="px-8 py-2 text-gray-900">{{ info.email }}</td>
+                <td class="px-8 py-2 text-gray-900">{{ info.phone_number }}</td>
+                <td class="px-8 py-2 text-gray-900">{{ info.address }}</td>
+                <td class="px-8 py-2 text-gray-900">{{ info.date_of_birth }}</td>
+                
+                <td class="px-5 py-2 text-gray-900">
+                    {% if info.profile_picture %}
+                    <img src="{{ info.profile_picture.url }}" alt="Profile Picture" class="w-12 h-12 rounded-full object-cover  border-purple-500 border-2 shadow-sm">
+                    {% else %}
+                    <span class="text-gray-500">No picture</span>
+                    {% endif %}
+                </td>
+
+                <td class="px-8 py-2 text-gray-900">
+                    {% if info.document_file %}
+                    <a href="{{ info.document_file.url }}" class="text-blue-600 hover:underline text-center" download>View</a>
+                    {% else %}
+                    <span class="text-gray-500">No document</span>
+                    {% endif %}
+                </td>
+
+                <td class="px-8 py-2 text-gray-900">{{ info.created_at.date }}</td>
+
+                <td class="px-8 py-2 flex justify-center space-x-2">
+                    {% if info.user == request.user %}
+                    <a href="{% url 'update_info' info.id %}" class="bg-yellow-500 text-white px-3 py-2 rounded hover:bg-yellow-400 transition duration-200 text-md font-semibold">Edit</a>
+                    <a href="{% url 'delete_info' info.id %}" class="bg-red-600 text-white px-3 py-2 rounded hover:bg-red-500 transition duration-200 text-md font-semibold">Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="16" class="px-6 py-4 text-center text-gray-500">No information available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

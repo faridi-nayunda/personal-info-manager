@@ -1,0 +1,25 @@
+{% extends "information/layout.html" %}
+
+{% block content %}
+
+    <div class="bg-white mx-auto shadow-md rounded-lg p-6 max-w-md text-center">
+        <h1 class="text-xl font-bold text-red-600 mb-4">
+            ARE YOU SURE YOU WANT TO DELETE THIS INFORMATION?
+        </h1>
+
+        <div class="flex justify-center space-x-4">
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                    Confirm
+                </button>
+            </form>
+
+            <a href="{% url 'info_page' %}" 
+               class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                Cancel
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

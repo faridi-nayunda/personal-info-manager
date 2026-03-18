@@ -1,0 +1,55 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    {% tailwind_css %}
+</head>
+<body class="bg-gray-200 flex justify-center items-center min-h-screen px-4">
+
+    <div class="w-full max-w-[90%] sm:max-w-md md:max-w-md mx-auto px-6 py-8 sm:px-8 sm:py-10 rounded-xl border border-gray-300 shadow-2xl bg-white">
+        <div class="my-2">
+            <h1 class="text-center text-2xl sm:text-3xl font-semibold text-purple-800">Login</h1>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <div>
+                <label class="block mb-2 text-gray-700 text-md font-semibold" for="username">Username</label>
+                <input class="w-full py-3 px-4 border-2 border-purple-400 rounded-lg focus:ring-blue-500" 
+                       type="text" name="username" id="username" required>
+            </div>
+
+            <div>
+                <label class="block mb-2 mt-4 text-gray-700 text-md font-semibold" for="password">Password</label>
+                <input class="w-full py-3 px-4 border-2 border-purple-400 rounded-lg focus:ring-blue-500" 
+                       type="password" name="password" id="password" required>
+            </div>
+
+            <div class="my-4">
+                <button type="submit" class="py-3 w-full rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition duration-200">Login</button>
+            </div>
+        </form>
+
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li class="text-md text-red-500 font-medium leading-snug">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="mt-6 text-center text-md font-medium">
+            <p>Don't have an account? 
+                <a href="{% url 'register' %}" class="text-blue-600 hover:underline">Register Here</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

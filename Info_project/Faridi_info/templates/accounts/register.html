@@ -1,0 +1,40 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+
+    {% tailwind_css %}
+</head>
+<body class="bg-gray-200 flex justify-center items-center min-h-screen px-4">
+    
+    <div class="w-full max-w-[90%] sm:max-w-md md:max-w-md  mx-auto px-6 py-8 sm:px-8 sm:py-10 rounded-xl border border-gray-300 shadow-2xl bg-white">
+        <div class="my-2">
+            <h1 class="text-center text-2xl sm:text-3xl font-semibold text-purple-800">Register</h1>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-4">
+                <label class="block mb-2 text-gray-700 text-md font-semibold">{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
+
+            <div class="mt-6">
+                <button type="submit" class="py-3 w-full rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition duration-200">Register</button>
+            </div>
+        </form>
+
+        <div class="mt-6 text-center text-md font-medium">
+            <p>Already have an account? 
+                <a href="{% url 'login' %}" class="text-blue-600 hover:underline">Login</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

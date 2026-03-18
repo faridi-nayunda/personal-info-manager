@@ -1,0 +1,101 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Personal Information App {% endblock %}</title>
+    {% tailwind_css %}
+</head>
+<body class="bg-gray-200 text-gray-900">
+
+    <!-- Navbar -->
+    <nav class="bg-purple-950 text-white shadow-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+
+            <!-- Logo / Brand Name -->
+            <a href="{% url 'my_view' %}" class="text-2xl font-bold text-yellow-400">
+                Personal Info App
+            </a>
+
+            <!-- Navigation Links (Hidden on Mobile) -->
+            <ul class="hidden md:flex space-x-8 text-lg font-medium">
+                <li>
+                    <a href="{% url 'my_view' %}" 
+                       class="hover:text-yellow-400 transition duration-300 {% if request.resolver_match.url_name == 'my_view' %} text-yellow-400 {% endif %}">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'create_page' %}" 
+                       class="hover:text-yellow-400 transition duration-300 {% if request.resolver_match.url_name == 'create_page' %} text-yellow-400 {% endif %}">
+                        Create Information
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'info_page' %}" 
+                       class="hover:text-yellow-400 transition duration-300 {% if request.resolver_match.url_name == 'info_page' %} text-yellow-400 {% endif %}">
+                        View Information
+                    </a>
+                </li>
+            </ul>
+
+            <!-- User Authentication & Logout -->
+            <div class="hidden md:flex items-center space-x-6">
+                {% if user.is_authenticated %}
+                    <div class="w-10 h-10 rounded-full bg-gray-600 flex justify-center items-center text-white font-semibold text-xl">
+                        {{ user.username|slice:":1" }}
+                    </div>
+                    <form action="{% url 'logout'%}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="border-2 border-white hover:border-red-500 transition duration-300 rounded-md py-1 px-4">
+                            Logout
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-toggle" class="md:hidden focus:outline-none">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (Improved) -->
+        <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full bg-purple-900 text-white text-lg space-y-4 py-4 text-center shadow-lg md:hidden">
+            <a href="{% url 'my_view' %}" class="block py-2 hover:text-yellow-400">Home</a>
+            <a href="{% url 'create_page' %}" class="block py-2 hover:text-yellow-400">Create Information</a>
+            <a href="{% url 'info_page' %}" class="block py-2 hover:text-yellow-400">View Information</a>
+
+            {% if user.is_authenticated %}
+            {% comment %} <div class="py-4 border-t border-gray-400">
+                <div class="w-10 h-10 mx-auto rounded-full bg-gray-600 flex justify-center items-center text-white font-semibold text-xl">
+                    {{ user.username|slice:":1" }}
+                </div> {% endcomment %}
+                <form action="{% url 'logout' %}" method="POST" class="mt-2">
+                    {% csrf_token %}
+                    <button type="submit" class="border-2 border-white px-4 py-1 rounded-md hover:border-blue-400 transition duration-300">
+                        Logout
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Section -->
+    <div class="container mx-auto py-10 px-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- JavaScript for Mobile Menu -->
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", function() {
+            document.getElementById("mobile-menu").classList.toggle("hidden");
+        });
+    </script>
+
+</body>
+</html>
